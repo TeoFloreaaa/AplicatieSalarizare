@@ -1,0 +1,205 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site1.Master.cs" Inherits="TPW_proiect.SiteMaster" %>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Proiect ASP.NET - Aplicatie SALARIZARE</title>
+
+    <style type="text/css">
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #e6e6e6;
+        }
+
+        /* === HEADER === */
+        .header {
+            background-color: #2f5597;
+            color: white;
+            padding: 10px 30px;
+        }
+
+        .header-title {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .header-subtitle {
+            font-size: 16px;
+            font-style: italic;
+        }
+
+        .header-right {
+            text-align: right;
+        }
+
+        .header-right img {
+            height: 100px;
+            margin-left: 10px;
+            border-radius: 5px;
+        }
+
+        /* === DATE/TIME === */
+        .datetime {
+            text-align: center;
+            background-color: #5b9bd5;
+            color: white;
+            padding: 5px;
+            font-size: 14px;
+        }
+
+        /* === MENU === */
+        .menu-container {
+            background-color: #3c78d8;
+            padding: 8px 15px;
+        }
+
+        .menu-container ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .menu-container li {
+            display: inline-block;
+            position: relative;
+        }
+
+        .menu-container a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+        }
+
+        .menu-container a:hover {
+            background-color: #1a4fa3;
+        }
+
+        /* === SUBMENIURI === */
+        .menu-container ul ul {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #5b9bd5;
+            min-width: 180px;
+            z-index: 1000;
+        }
+
+        .menu-container ul ul li {
+            display: block;
+        }
+
+        .menu-container li:hover > ul {
+            display: block;
+        }
+
+        /* === CONTENT === */
+        .content {
+            background-color: white;
+            padding: 30px;
+            min-height: 400px;
+        }
+
+        .content p {
+            font-size: 15px;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <form id="form1" runat="server">
+        <asp:ScriptManager ID="ScriptManager1" runat="server" />
+
+        <table style="width:100%; border-collapse:collapse;">
+            <!-- HEADER -->
+            <tr>
+                <td class="header">
+                    <table style="width:100%;">
+                        <tr>
+                            <td>
+                                <div class="header-title">Proiect ASP.NET - APLICATIE SALARIZARE</div>
+                                <div class="header-subtitle">- Florea Teodor-Emil -</div>
+                            </td>
+
+                            <td class="header-right">
+                                <div style="display: flex; gap: 10px; justify-content: flex-end; align-items: center;">
+                                    <!-- Prima imagine -->
+                                    <asp:UpdatePanel ID="UpdatePanelImages1" runat="server">
+                                        <ContentTemplate>
+                                            <asp:Image ID="imgSlideshow1" runat="server" Width="180" Height="100" Style="border-radius: 6px;" />
+                                        </ContentTemplate>
+                                        <Triggers>
+                                            <asp:AsyncPostBackTrigger ControlID="TimerImages" EventName="Tick" />
+                                        </Triggers>
+                                    </asp:UpdatePanel>
+
+                                    <!-- A doua imagine -->
+                                    <asp:UpdatePanel ID="UpdatePanelImages2" runat="server">
+                                        <ContentTemplate>
+                                            <asp:Image ID="imgSlideshow2" runat="server" Width="180" Height="100" Style="border-radius: 6px;" />
+                                        </ContentTemplate>
+                                        <Triggers>
+                                            <asp:AsyncPostBackTrigger ControlID="TimerImages" EventName="Tick" />
+                                        </Triggers>
+                                    </asp:UpdatePanel>
+                                </div>
+
+                                <!-- Timer pentru slideshow -->
+                                <asp:Timer ID="TimerImages" runat="server" Interval="5000" OnTick="TimerImages_Tick"></asp:Timer>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <!-- DATE/TIME -->
+            <tr>
+                <td class="datetime">
+                    <asp:UpdatePanel ID="UpdatePanelTime" runat="server">
+                        <ContentTemplate>
+                            <asp:Label ID="lblDateTime" runat="server" Text=""></asp:Label>
+                        </ContentTemplate>
+                        <Triggers>
+                            <asp:AsyncPostBackTrigger ControlID="TimerTime" EventName="Tick" />
+                        </Triggers>
+                    </asp:UpdatePanel>
+
+                    <asp:Timer ID="TimerTime" runat="server" Interval="1000" OnTick="TimerTime_Tick"></asp:Timer>
+                </td>
+            </tr>
+
+            <!-- MENU -->
+            <tr>
+                <td class="menu-container">
+                    <asp:Menu ID="Menu1" runat="server" Orientation="Horizontal" StaticDisplayLevels="1"
+                              IncludeStyleBlock="false" RenderingMode="List">
+                        <Items>
+                            <asp:MenuItem Text="Home" NavigateUrl="~/Home.aspx"></asp:MenuItem>
+                            <asp:MenuItem Text="Introducere date">
+                                <asp:MenuItem Text="Actualizare" NavigateUrl="~/Actualizare.aspx"></asp:MenuItem>
+                                <asp:MenuItem Text="Adăugare" NavigateUrl="~/Adaugare.aspx"></asp:MenuItem>
+                                <asp:MenuItem Text="Ștergere" NavigateUrl="~/Stergere.aspx"></asp:MenuItem>
+                            </asp:MenuItem>
+                            <asp:MenuItem Text="Rapoarte">
+                                <asp:MenuItem Text="Stat plată" NavigateUrl="~/StatPlata.aspx"></asp:MenuItem>
+                                <asp:MenuItem Text="Fluturași" NavigateUrl="~/Fluturasi.aspx"></asp:MenuItem>
+                            </asp:MenuItem>
+                            <asp:MenuItem Text="Procente" NavigateUrl="~/Login.aspx"></asp:MenuItem>
+                        </Items>
+                    </asp:Menu>
+                </td>
+            </tr>
+
+            <!-- CONTENT PLACEHOLDER -->
+            <tr>
+                <td class="content">
+                    <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>
